@@ -20,19 +20,29 @@
                         Please sign in to your account.</p>
                 </div>
                 <div class="form-section">
-                    <!-- <form class="col-lg-8" [formGroup]="loginForm" (ngSubmit)="onSubmit()"> -->
-                    <form class="col-lg-8">
+                    <form class="col-lg-8" [formGroup]="loginForm" (ngSubmit)="adminLogin()">
 
                         <mat-form-field appearance="outline">
-                            <mat-label>Email</mat-label>
-                            <input matInput placeholder="enter your email" value="">
+                            <mat-label>User Name</mat-label>
+                            <input matInput placeholder="enter your User Name" value="" formControlName="emailId"
+                                [(ngModel)]="currentUser.emailId">
+                            <mat-error
+                                *ngIf="loginForm.get('emailId')?.invalid && (loginForm.get('emailId')?.dirty || loginForm.get('emailId')?.touched)">
+                                User Name is required
+                            </mat-error>
                         </mat-form-field>
+
                         <mat-form-field appearance="outline">
                             <mat-label>Password</mat-label>
-                            <input matInput type="password" placeholder="enter your Password" value="">
+                            <input matInput type="password" placeholder="enter your Password"
+                                [(ngModel)]="currentUser.password" value="" formControlName="password">
+                            <mat-error
+                                *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+                                Password is required
+                            </mat-error>
                         </mat-form-field>
-                        <!-- <button class="login-button" (click)="adminLogin(emailId,password)"> -->
-                        <button class="login-button" routerLink="/admin">
+
+                        <button class="login-button">
                             LOGIN
                         </button>
                     </form>

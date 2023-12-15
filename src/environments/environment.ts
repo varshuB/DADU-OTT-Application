@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl1: 'http://ottservices.iplextechnology.com/api/UserManagementAPI',
-  apiUrl: 'http://ottservices.iplextechnology.com/api/AdminManagementAPI',
+  adminApiUrl: 'http://ottservices.iplextechnology.com/v1/admin',
   baseUrl: 'http://localhost:4200'
 };
 

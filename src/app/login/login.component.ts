@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../admin/Services/admin.service';
 import { catchError } from 'rxjs';
+import { Admin } from '../admin/Models/adminLogin.model';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -10,31 +12,39 @@ import { catchError } from 'rxjs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  emailId: any;
-  password: any;
-  // loginForm!: FormGroup;
-  // submitted = false;
+
+  loginForm!: FormGroup;
+  submitted = false;
+  currentUser: Admin = {
+    emailId: '',
+    password: ''
+  }
+
   constructor(
-    // private formBuilder: FormBuilder,
-    // private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
     private router: Router,
-    private adminService: AdminService
-    // private authenticationService: AuthenticationService,
-    // private alertService: AlertService
+    private adminService: AdminService,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
-    // this.loginForm = this.formBuilder.group({
-    //   user_name: ['', Validators.required],
-    //   user_password: ['', Validators.required]
-    // });
+    this.loginForm = this.formBuilder.group({
+      emailId: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
-  adminLogin(emailId: any, password: any) {
-    this.adminService.adminLogin(emailId, password)
+  get f() { return this.loginForm.controls; }
+
+  adminLogin() {
+    this.adminService.adminLogin()
       .subscribe((_response) => {
-        console.log("Login Successfully");
-        this.router.navigate(['/admin'])
+        if (this.currentUser.emailId == 'admin'
+          && this.currentUser.password == 'admin') {
+          this.router.navigateByUrl('/admin')
+        } else {
+          alert('something went wrong');
+        }
       })
   }
 }
